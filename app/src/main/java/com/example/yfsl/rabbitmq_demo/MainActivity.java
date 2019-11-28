@@ -2,7 +2,6 @@ package com.example.yfsl.rabbitmq_demo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,12 +18,9 @@ public class MainActivity extends AppCompatActivity {
         button_p.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","发送");
-                RabbitMQUtils2.setupConnectionFactory();
-                RabbitMQUtils2.basicPublish();
+                RabbitMQUtils2.basicPublish();//发送消息
             }
         });
-        RabbitMQUtils2.setupConnectionFactory();
         RabbitMQUtils2.basicConsume();
     }
 }

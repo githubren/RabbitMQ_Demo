@@ -1,5 +1,6 @@
 package com.example.yfsl.rabbitmq_demo;
 
+
 import android.util.Log;
 
 import com.rabbitmq.client.AMQP;
@@ -8,7 +9,6 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.QueueingConsumer;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -19,13 +19,13 @@ import java.util.concurrent.TimeoutException;
  */
 
 public class RabbitMQUtils2 {
-    private static String userName = "sa";//用户名
-    private static String passWord = "123456";//用户密码
-    private static String hostName = "192.168.40.2";//主机IP
+    private static String userName = "test";//用户名
+    private static String passWord = "test123";//用户密码
+    private static String hostName = "192.168.1.3";//服务器IP
     private static int portNum = 5672;//端口
-    private static String exchangeName = "amq.direct";//交换机名称
+    private static String exchangeName = "test_exchange";//交换机名称
     private static ConnectionFactory factory = new ConnectionFactory();//连接工厂对象 创建新连接
-    private static final String routingKey = "text";//路由名称
+    private static final String routingKey = "test_rout";//路由名称
     private static String queueName = "test_queue";//队列名称  接收端和发送端分别从指定的队列去去消息
 
     /**
@@ -34,14 +34,16 @@ public class RabbitMQUtils2 {
     public static void setupConnectionFactory() {
         factory.setUsername(userName);//用户名
         factory.setPassword(passWord);//密码
-        factory.setHost(hostName);//主机ip
+        factory.setHost(hostName);//服务器IP
         factory.setPort(portNum);//端口
+        factory.setConnectionTimeout(10000);//设置超时时间
     }
 
     /**
      * 发消息
      */
     public static void basicPublish() {
+        setupConnectionFactory();
         new Thread(){
             @Override
             public void run() {
@@ -76,6 +78,7 @@ public class RabbitMQUtils2 {
      */
 
     public static void basicConsume() {
+        setupConnectionFactory();
         new Thread(){
             @Override
             public void run() {
